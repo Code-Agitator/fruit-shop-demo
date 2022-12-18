@@ -91,7 +91,7 @@ public class ItemCategoryController extends BaseController {
         load.setIsDelete(1);
         itemCategoryService.updateById(load);
         //将下级也删除
-        String sql = "update item_category set isDelete=1 where pid=" + id;
+        String sql = "update item_category set is_delete=1 where pid=" + id;
         itemCategoryService.updateBysql(sql);
         return "redirect:/itemCategory/findBySql";
     }
@@ -101,7 +101,7 @@ public class ItemCategoryController extends BaseController {
      */
     @RequestMapping("/findBySql2")
     public String findBySql2(ItemCategory itemCategory, Model model) {
-        String sql = "select * from item_category where isDelete=0 and pid=" + itemCategory.getPid() + " order by id";
+        String sql = "select * from item_category where is_delete=0 and pid=" + itemCategory.getPid() + " order by id";
         Pager<ItemCategory> pagers = itemCategoryService.findBySqlRerturnEntity(sql);
         model.addAttribute("pagers", pagers);
         model.addAttribute("obj", itemCategory);

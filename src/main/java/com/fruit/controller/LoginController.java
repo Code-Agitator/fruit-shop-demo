@@ -79,7 +79,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/uIndex")
     public String uIndex(Model model, Item item, HttpServletRequest request){
-        String sql1 = "select * from item_category where isDelete=0 and pid is null order by name";
+        String sql1 = "select * from item_category where is_delete=0 and pid is null order by name";
         List<ItemCategory> fatherList = itemCategoryService.listBySqlReturnEntity(sql1);
         List<CategoryDto> list = new ArrayList<>();
         if(!CollectionUtils.isEmpty(fatherList)){
@@ -87,7 +87,7 @@ public class LoginController extends BaseController {
                 CategoryDto dto = new CategoryDto();
                 dto.setFather(ic);
                 //查询二级类目
-                String sql2 = "select * from item_category where isDelete=0 and pid="+ic.getId();
+                String sql2 = "select * from item_category where is_delete=0 and pid="+ic.getId();
                 List<ItemCategory> childrens = itemCategoryService.listBySqlReturnEntity(sql2);
                 dto.setChildrens(childrens);
                 list.add(dto);
@@ -95,11 +95,11 @@ public class LoginController extends BaseController {
             }
         }
         //折扣商品
-        List<Item> zks = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and zk is not null order by zk desc limit 0,10");
+        List<Item> zks = itemService.listBySqlReturnEntity("select * from item where is_delete=0 and zk is not null order by zk desc limit 0,10");
         model.addAttribute("zks",zks);
 
         //热销商品
-        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 order by gmNum desc limit 0,10");
+        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where is_delete=0 order by gmNum desc limit 0,10");
         model.addAttribute("rxs",rxs);
         System.out.println(rxs);
         return "login/uIndex";
